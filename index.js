@@ -1,16 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Form and Resume elements
   const form = document.getElementById("resume-form");
   const resumeContent = document.getElementById("resume-content");
   const shareableLink = document.getElementById("shareable-link");
   const copyLinkBtn = document.getElementById("copy-link-btn");
   const downloadBtn = document.getElementById("download-btn");
 
-  // Event listener for form submission
   form.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    // Collect user input data
     const formData = {
       name: document.getElementById("name").value,
       email: document.getElementById("email").value,
@@ -26,20 +23,16 @@ document.addEventListener("DOMContentLoaded", () => {
         .map((skill) => skill.trim()),
     };
 
-    // Generate the resume dynamically
     generateResume(formData);
 
-    // Generate the unique URL
     const userName = formData.name.toLowerCase().replace(/\s+/g, "");
     const uniqueUrl = `resume-viewer.html?username=${userName}`;
     localStorage.setItem(userName, JSON.stringify(formData)); // Save data
 
-    // Update the shareable link
     shareableLink.href = uniqueUrl;
     shareableLink.textContent = `Open Resume: ${uniqueUrl}`;
-    shareableLink.style.display = "inline"; // Make the link visible
+    shareableLink.style.display = "inline"; 
 
-    // Enable "Copy Link" button
     copyLinkBtn.style.display = "inline-block";
     copyLinkBtn.addEventListener("click", function () {
       copyToClipboard(`/${uniqueUrl}`);
@@ -47,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Function to generate and display the resume (non-editable)
   function generateResume(data) {
     resumeContent.innerHTML = `
             <h3>${data.name}</h3>
@@ -65,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
   }
 
-  // Function to copy link to clipboard
   function copyToClipboard(text) {
     const tempInput = document.createElement("input");
     document.body.appendChild(tempInput);
@@ -75,7 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.removeChild(tempInput);
   }
 
-  // Download resume as PDF
   downloadBtn.addEventListener("click", function () {
     const resumeElement = document.getElementById("resume");
     const opt = {
